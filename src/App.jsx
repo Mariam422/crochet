@@ -35,7 +35,7 @@ import Register from "./Components/Registre/Registre"
 export default function App() {
   return (
     <Routes>
-      <Route path="/Register" element={<Register/>} />
+      <Route path="/register" element={<Register/>} />
       <Route path="/login" element={<Login />} />
 
       <Route element={<Layout />}>
