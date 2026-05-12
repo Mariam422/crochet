@@ -150,6 +150,23 @@ export default function LoginPage() {
                 Remember me
               </label>
             </div>
+             <div className="flex items-center gap-2 my-4">
+              <div className="h-px flex-1 bg-[#eadbc8]"></div>
+              <span className="text-xs text-[#7a5c50]">OR</span>
+              <div className="h-px flex-1 bg-[#eadbc8]"></div>
+            </div>
+            <div className="text-center mt-4 text-sm text-[#7a5c50]">
+              <p>
+                Don’t have an account?{" "}
+                <span
+                  onClick={() => navigate("/Register")}
+                  className="text-[#e76f51] font-medium cursor-pointer hover:underline"
+                >
+                  Create new account
+                </span>
+              </p>
+            </div>
+           
 
             {/* Button */}
             <button
@@ -159,10 +176,6 @@ export default function LoginPage() {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-
-        
-
-   
         </div>
 
         {/* Decorative */}

@@ -28,11 +28,7 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
-    if (
-      !formData.username ||
-      !formData.email ||
-      !formData.password
-    ) {
+    if (!formData.username || !formData.email || !formData.password) {
       setError("Please fill in all fields");
       return;
     }
@@ -40,35 +36,30 @@ export default function Register() {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        "http://localhost:1337/api/auth/local/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            username: formData.username,
-            email: formData.email,
-            password: formData.password,
-          }),
-        }
-      );
+      const res = await fetch("http://localhost:1337/api/auth/local/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(
-          data.error?.message || "Registration failed"
-        );
+        throw new Error(data.error?.message || "Registration failed");
       }
 
-      // Save token + user
+      // Save token + user (Auto login)
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/", { replace: true });
+      // redirect to home
+      navigate("/login", { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -92,18 +83,18 @@ export default function Register() {
             </p>
           </div>
 
-          {/* Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-6"
-          >
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
-            )}
+          {/* Error */}
+          {error && (
+            <div className="bg-red-100 text-red-600 p-2 rounded text-sm mb-4">
+              {error}
+            </div>
+          )}
 
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             {/* Username */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-2 text-[#4e342e]">
+            <div>
+              <label className="text-sm font-medium mb-2 text-[#4e342e] block">
                 Username
               </label>
 
@@ -125,8 +116,8 @@ export default function Register() {
             </div>
 
             {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-2 text-[#4e342e]">
+            <div>
+              <label className="text-sm font-medium mb-2 text-[#4e342e] block">
                 Email Address
               </label>
 
@@ -148,8 +139,8 @@ export default function Register() {
             </div>
 
             {/* Password */}
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-2 text-[#4e342e]">
+            <div>
+              <label className="text-sm font-medium mb-2 text-[#4e342e] block">
                 Password
               </label>
 
@@ -170,16 +161,10 @@ export default function Register() {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setShowPassword((p) => !p)
-                  }
+                  onClick={() => setShowPassword((p) => !p)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7a5c50]"
                 >
-                  {showPassword ? (
-                    <EyeOff size={18} />
-                  ) : (
-                    <Eye size={18} />
-                  )}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
@@ -187,14 +172,14 @@ export default function Register() {
             {/* Button */}
             <button
               disabled={loading}
-              className="bg-[#f4a261] text-white py-3 rounded-lg font-medium transition hover:bg-[#e76f51] active:scale-95"
+              className="bg-[#f4a261] text-white py-3 rounded-lg font-medium transition hover:bg-[#e76f51] active:scale-95 disabled:opacity-60"
             >
               {loading ? "Creating account..." : "Register"}
             </button>
           </form>
         </div>
 
-        {/* Decorative */}
+        {/* Footer */}
         <div className="text-center mt-6 text-sm text-[#8d5a44]">
           🧶 Join the crochet world today! 🧶
         </div>
