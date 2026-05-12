@@ -159,7 +159,7 @@ export default function LoginPage() {
               <p>
                 Don’t have an account?{" "}
                 <span
-                  onClick={() => navigate("/Register")}
+                  onClick={() => navigate("/register")}
                   className="text-[#e76f51] font-medium cursor-pointer hover:underline"
                 >
                   Create new account
