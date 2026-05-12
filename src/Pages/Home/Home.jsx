@@ -23,7 +23,7 @@
 
 import { useState } from "react";
 import { lessons } from "../LessonsPage/Lessons";
-import LessonCard from "../../components/LessonCard/LessonCard";
+import LessonCard from "../../Components/LessonCard/LessonCard";
 
 export default function Home() {
   const levels = ["All", "Beginner", "Intermediate", "Advanced"];
